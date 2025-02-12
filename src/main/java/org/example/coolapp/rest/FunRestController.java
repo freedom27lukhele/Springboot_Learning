@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class FunRestController {
 
     //injecting properties from the application.properties
-
     @Value("${coach.name}")
     private String name;
 
@@ -21,7 +20,6 @@ public class FunRestController {
     public String teamInfo() {
         return name + " " + teamName;
     }
-
 
 //    @GetMapping("/")
 //    public String sayHello() {
@@ -39,6 +37,5 @@ public class FunRestController {
 //    public String getFortune() {
 //        return "i won the lotto";
 //    }
-
 
 }
