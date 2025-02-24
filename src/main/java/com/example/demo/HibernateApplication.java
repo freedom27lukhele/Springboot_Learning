@@ -20,20 +20,54 @@ public class HibernateApplication {
     public CommandLineRunner commandLineRunner(StudentDAO studentDAO) {
         return runner -> {
 //            createStudent(studentDAO);
-//            createMultipleStudents(studentDAO);
+            createMultipleStudents(studentDAO);
 //            readStudent(studentDAO);
-
 //            queryForStudents(studentDAO);
+//            queryForStudentsByLastName(studentDAO);
+//            updateStudent(studentDAO);
+//            removeStudent(studentDAO);
+//            deleteAllStudents(studentDAO);
 
-            queryForStudentsByLastName(studentDAO);
         };
+    }
+
+    private void deleteAllStudents(StudentDAO studentDAO) {
+        System.out.println("Deleting all students");
+        int numRowDeleted = studentDAO.deleteAll();
+        System.out.println("Number of rows deleted: " + numRowDeleted);
+    }
+
+    private void removeStudent(StudentDAO studentDAO) {
+        int studentId = 3;
+
+        System.out.println("Deleting student: " + studentId);
+
+        studentDAO.delete(studentId);
+    }
+
+    private void updateStudent(StudentDAO studentDAO) {
+        //retrieve student based on the id: primary key
+        int studentId = 1;
+        System.out.println("Getting student id : " + studentId);
+        Student student = studentDAO.findById(studentId);
+
+        //change first name to "Scooby"
+        System.out.println("Updating Student...");
+        student.setFirstName("vryheid");
+        studentDAO.update(student);
+
+        //update the student
+        studentDAO.update(student);
+
+        //display the updated student
+        System.out.println("Updated student: " + student);
     }
 
     private void queryForStudentsByLastName(StudentDAO studentDAO) {
         List<Student> students = studentDAO.findByLastName("duck");
 
         for (Student student : students) {
-            System.out.println("ByLastname "+student);
+            System.out.println("ByLastname " + student);
         }
     }
 
