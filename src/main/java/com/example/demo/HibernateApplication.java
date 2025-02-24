@@ -7,6 +7,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.List;
+
 @SpringBootApplication
 public class HibernateApplication {
 
@@ -18,8 +20,52 @@ public class HibernateApplication {
     public CommandLineRunner commandLineRunner(StudentDAO studentDAO) {
         return runner -> {
 //            createStudent(studentDAO);
-            createMultipleStudents(studentDAO);
+//            createMultipleStudents(studentDAO);
+//            readStudent(studentDAO);
+
+//            queryForStudents(studentDAO);
+
+            queryForStudentsByLastName(studentDAO);
         };
+    }
+
+    private void queryForStudentsByLastName(StudentDAO studentDAO) {
+        List<Student> students = studentDAO.findByLastName("duck");
+
+        for (Student student : students) {
+            System.out.println("ByLastname "+student);
+        }
+    }
+
+    private void queryForStudents(StudentDAO studentDAO) {
+        //get a list of students
+        List<Student> students = studentDAO.findAll();
+        //display the list of students
+        for (Student student : students) {
+            System.out.println("Find All Students : " + student);
+        }
+    }
+
+    private void readStudent(StudentDAO studentDAO) {
+
+        //create the student object
+        System.out.println("Creating new student...");
+        Student student = new Student("daffy", "duck", "DDB@gmail.com");
+
+        //save the student object
+        System.out.println("Saving student...");
+        studentDAO.save(student);
+
+        //display id of the saved student
+        int theId = student.getId();
+        System.out.println("Saved Student Id " + theId);
+
+        //retrieve based on the id : primary key
+        System.out.println("Retrieving student with id " + theId);
+        Student tempStudent = studentDAO.findById(theId);
+
+        //display student
+        System.out.println("Found the student: " + tempStudent);
     }
 
     private void createMultipleStudents(StudentDAO studentDAO) {
@@ -48,6 +94,7 @@ public class HibernateApplication {
 
         //display id of the saved student
         System.out.println("Saved Student Id " + student.getId());
+
 
     }
 }
